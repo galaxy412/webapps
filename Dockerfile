@@ -9,7 +9,7 @@ RUN mvn clean package -DskipTests
 # --------------------------------------------------------------------------------
 
 # GIAI ĐOẠN 2: CHẠY ỨNG DỤNG (Sử dụng Image Tomcat)
-FROM tomcat:10.1.48-jdk17-corretto
+FROM tomcat:10.1.20-jdk17-corretto
 
 # Xóa ứng dụng mặc định của Tomcat
 RUN rm -rf /usr/local/tomcat/webapps/*
