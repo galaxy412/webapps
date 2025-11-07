@@ -6,14 +6,16 @@ RUN rm -rf /usr/local/tomcat/webapps/*
 # Thêm lệnh sed để vô hiệu hóa cổng shutdown
 RUN sed -i 's/<Server port="8005"/<Server port="-1"/' /usr/local/tomcat/conf/server.xml
 
-# Sao chép file WAR của bạn vào thư mục webapps
-COPY *.war /usr/local/tomcat/webapps
+# Sửa lỗi 404: Sao chép file WAR từ thư mục 'dist' và đổi tên thành ROOT.war
+# Tên file WAR của bạn là WebApplication1.war
+COPY dist/WebApplication1.war /usr/local/tomcat/webapps/ROOT.war
 
-# Lệnh này sẽ chuyển đổi người dùng chạy các lệnh tiếp theo (tuy nhiên, 
-# trong trường hợp này, việc copy bằng root rồi chạy bằng tomcat thường vẫn ổn)
+# Dòng USER tomcat không cần thiết khi không dùng chown
+# # Lệnh này sẽ chuyển đổi người dùng dùng chạy các lệnh tiếp theo ...
 # USER tomcat 
 
 EXPOSE 8080
+
 ENV CATALINA_OPTS="-Djava.awt.headless=true --enable-native-access=ALL-UNNAMED"
 
 # Khởi chạy Tomcat
